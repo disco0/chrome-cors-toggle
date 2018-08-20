@@ -1,36 +1,62 @@
 const getAllowHeader = () => {
-    var allow = localStorage.getItem('allowOrigin');
+    const allow = localStorage.getItem('allowOrigin');
 
     return allow
         ? allow
         : '*';
 };
 
+const getDomains = () => {
+    const domains = localStorage.getItem('allowDomains');
+
+    if (domains) {
+        return domains
+        .split(',')
+        .reduce((obj, domain) => {
+            obj[domain] = true;
+            return obj;
+        }, {});
+    }
+
+    return null;
+};
+
 const handleResponse = (res) => {
+    const {
+        initiator,
+        responseHeaders
+    } = res;
+
+    const domains = getDomains();
+
+    if (domains !== null && !domains[initiator]) {
+        return res;
+    }
+
     let CORS = false;
 
-    for (let i in res.responseHeaders) {
+    for (let i in responseHeaders) {
         if (
-            res.responseHeaders[i].name === 'access-control-allow-origin'
-            && res.responseHeaders[i].value === '*'
+            responseHeaders[i].name === 'access-control-allow-origin'
+            && responseHeaders[i].value === '*'
         ) {
             CORS = true;
         }
     }
 
     if (!CORS) {
-        res.responseHeaders.push({
+        responseHeaders.push({
             name: 'access-control-allow-origin',
             value: getAllowHeader()
         });
 
-        res.responseHeaders.push({
+        responseHeaders.push({
             name: 'access-control-allow-credentials',
             value: 'true'
         });
     }
 
-    return res;
+    return { responseHeaders };
 }
 
 const setOn = () => {
@@ -45,7 +71,7 @@ const setOn = () => {
     chrome.webRequest.onHeadersReceived.addListener(handleResponse, {
         urls: [ '<all_urls>' ],
         types: [ 'xmlhttprequest' ]
-    }, [ 'responseHeaders', "blocking" ]);
+    }, [ 'responseHeaders', 'blocking' ]);
 };
 
 const setOff = () => {

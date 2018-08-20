@@ -2,9 +2,12 @@
     const save = document.querySelector('.options-save');
     const resume = document.querySelector('.options-resume');
     const tips = document.querySelector('.options-tips');
-    const field = document.getElementById('allow-origin');
 
-    field.value = localStorage.getItem('allowOrigin') || '';
+    const allowedOrigins = document.getElementById('allow-origin');
+    const allowedDomains = document.getElementById('allow-domains');
+
+    allowedOrigins.value = localStorage.getItem('allowOrigin') || '';
+    allowedDomains.value = localStorage.getItem('allowDomains') || '';
 
     save.addEventListener('click', (ev) => {
         ev.preventDefault();
@@ -14,7 +17,12 @@
 
         localStorage.setItem(
             'allowOrigin',
-            field.value
+            allowedOrigins.value
+        );
+
+        localStorage.setItem(
+            'allowDomains',
+            allowedDomains.value
         );
 
         setTimeout(() => {
@@ -28,11 +36,17 @@
 
         resume.disabled = true;
         tips.innerHTML = '';
-        field.value = field.placeholder;
 
+        allowedOrigins.value = '';
         localStorage.setItem(
             'allowOrigin',
-            field.value
+            ''
+        );
+
+        allowedDomains.value = '';
+        localStorage.setItem(
+            'allowDomains',
+            ''
         );
 
         setTimeout(() => {
