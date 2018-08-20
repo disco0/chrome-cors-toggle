@@ -1,0 +1,27 @@
+{
+   "background": {
+      "scripts": [ "scripts/background.js" ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "38": "images/icon-38.png"
+      },
+      "default_title": "CORS Toggle"
+   },
+   "description": "Modify/Add Access-Control-Allow-Origin Header",
+   "icons": {
+      "128": "images/icon-128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu8QBlWkPGcZZEf3gO+FWr8R2YeVEEO9RP/1s+YnO4JcV8oco8MvaumJySIoH6XK1sgtx7YsP1z5ZOsDqrECylH+lKxz1tKs1tnK6aAKWSna/HS6i+IiS8ZyNfU7qal1623dmk/FR/BbcdfSKUTuzNOl70PctdiwYdXoWFaXziSNzXFWd48efquv6wtL5Z3yK4oCiWboOa3X+6FIZCXsO0mDMc+k7YEksEDASKGgXBeFxW+TsBDwul+rj1HfnLn0b+uJjkHkjrFXUKhRQ3Mnqv3emBfh1t7zG8UrnISps8rPISpC5PLBhWKlEl0Mvd+VpVcrlDNw+SlIXmDNQPBPbSQIDAQAB",
+   "manifest_version": 2,
+   "name": "CORS Toggle (clean version)",
+   "options_page": "options.html",
+   "permissions": [
+       "webRequest",
+       "webRequestBlocking",
+       "storage",
+       "\u003Call_urls>"
+   ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0"
+}
